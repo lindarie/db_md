@@ -1,31 +1,35 @@
 IF NOT EXISTS (
    SELECT name
    FROM sys.databases
-   WHERE name = 'name'
+   WHERE name = 'Linda_1'
 )
-CREATE DATABASE name 
-ON (NAME='name_Data',
-    FILENAME='C:\database\name.mdf',
+CREATE DATABASE Linda_1 
+ON (NAME='Linda_1_Data',
+    FILENAME='C:\database\Linda_1.mdf',
 	SIZE=100 MB,
 	FILEGROWTH=10 MB)
-LOG ON (NAME='name_Log',
-	FILENAME='C:\database\name_Log.ldf',
+LOG ON (NAME='Linda_1_Log',
+	FILENAME='C:\database\Linda_1_Log.ldf',
 	SIZE=5 MB,
-	FILEGROWTH=1 MB)
-
-use name
+	FILEGROWTH=1 MB);
 GO
 
-ALTER DATABASE name ADD FILEGROUP CustomerDataFilegroup
+use Linda_1;
+GO
 
-ALTER DATABASE name ADD FILE (
-	NAME='name_Data2',
-	FILENAME='C:\database\name_Data2.ndf')
-TO FILEGROUP CustomerDataFilegroup
+ALTER DATABASE Linda_1 ADD FILEGROUP DataFilegroup
 
-CREATE SCHEMA test1
+ALTER DATABASE Linda_1 ADD FILE (
+	NAME='Linda_1_Data2',
+	FILENAME='C:\database\Linda_1_Data2.ndf')
+TO FILEGROUP DataFilegroup;
+GO
 
-CREATE SCHEMA test2
+CREATE SCHEMA test1;
+GO
+
+CREATE SCHEMA test2;
+GO
 
 CREATE TABLE test1.testTable(
 	id int,
@@ -37,7 +41,6 @@ CREATE TABLE test2.testTable2(
 	text nvarchar(100)
 )
 
-
 INSERT INTO test1.testTable (test1.id, test1.text)
 VALUES  (1, 'TEXT1'),
 		(2, 'TEXT2'),
@@ -46,7 +49,6 @@ VALUES  (1, 'TEXT1'),
 		(5, 'TEXT5');
 
 SELECT * FROM test1.testTable;
-
 
 INSERT INTO test2.testTable2 (test2.id, test2.text)
 VALUES  (1, 'TEXT1'),
@@ -57,22 +59,22 @@ VALUES  (1, 'TEXT1'),
 
 SELECT * FROM test2.testTable2;
 
-CREATE DATABASE name_Snapshot ON
-(NAME='name_Data', 
-FILENAME='C:\database\name_Snapshot.ss'),
-(NAME='name_Data2', 
-FILENAME='C:\database\name_Snapshot2.ss')
-AS SNAPSHOT OF name
+CREATE DATABASE Linda_1_Snapshot ON
+(NAME='Linda_1_Data', 
+FILENAME='C:\database\Linda_1_Snapshot.ss'),
+(NAME='Linda_1_Data2', 
+FILENAME='C:\database\Linda_1_Snapshot2.ss')
+AS SNAPSHOT OF Linda_1
 
-select * from name_Snapshot.test1.testTable;
+SELECT * FROM Linda_1_Snapshot.test1.testTable;
 
 UPDATE test1.testTable
 SET text = 'new value'
 WHERE id IN (1, 3);
 
 SELECT * FROM test1.testTable;
-SELECT * FROM name_Snapshot.test1.testTable;
+SELECT * FROM Linda_1_Snapshot.test1.testTable;
 
-DROP DATABASE name_Snapshot;
+DROP DATABASE Linda_1_Snapshot;
 USE master;
-DROP DATABASE name;
+DROP DATABASE Linda_1;

@@ -7,9 +7,9 @@ GO
 CREATE SCHEMA Person;
 GO
 
-CREATE TYPE number_type FROM int NOT NULL;
-CREATE TYPE name_type FROM nvarchar(50) NOT NULL;
-CREATE TYPE date_type FROM smalldatetime NOT NULL;
+CREATE TYPE Person.number_type FROM int NOT NULL;
+CREATE TYPE Person.name_type FROM nvarchar(50) NOT NULL;
+CREATE TYPE Person.date_type FROM smalldatetime NOT NULL;
 
 CREATE PARTITION FUNCTION pf_OrderBirthDate(smalldatetime)
 AS RANGE RIGHT
@@ -74,9 +74,9 @@ CREATE TABLE PersonPartitionedTable
 	DateCreated smalldatetime NOT NULL,
 	Height decimal(4,2) NULL,
 	CurrentWeight float NULL,
-	Number number_type,
-	Full_name name_type,
-	Birthday date_type,
+	Number Person.number_type,
+	Full_name Person.name_type,
+	Birthday Person.date_type,
 	Age AS DATEDIFF(yy, Birthday, GETDATE())
 )
 ON ps_PersonBirthDate(birthday);
@@ -116,9 +116,9 @@ CREATE TABLE dbo.PersonArchive
 	DateCreated smalldatetime NOT NULL,
 	Height decimal(4,2) NULL,
 	CurrentWeight float NULL,
-	Number number_type,
-	Full_name name_type,
-	Birthday date_type,
+	Number Person.number_type,
+	Full_name Person.name_type,
+	Birthday Person.date_type,
 	Age AS DATEDIFF(yy, Birthday, GETDATE())
 ) ON fg1
 

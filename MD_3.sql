@@ -1,17 +1,3 @@
-/*
-Izveidot skriptu, kas veic šādas darbības:
-
-Izveido tabulu, kurā būtu
-1) NULL un NOT NULL kolonnas,
-2) primārā atslēga,
-3) unique constraint,
-4) check constraint,
-6) default constraint.
-
-Izveido 2. tabulu ar ārējo atslēgu uz pirmo tabulu, kas darbojas on delete cascade veidā.
-Izveidot datu manipulācijas (ievietošanas/dzēšanas/maiņas) operācijas, kas pārbauda/demonstrē visu uzdevumā izveidoto tabulu ierobežojumu (contstraint) darbību. Skriptam jāsatur veiksmīgas un neveiksmīgas datu manipulācijas operācijas. Uz katru ierobežojumu vismaz pa vienai veiksmīgai/neveiksmīgai ievietošanas vai dzēšanas vai maiņas operācijai (izņemot default constraint, kam jābūt tikai 1 ievietošanas operācijai). Ārējas atslēgas darbības demonstrēšanai jāuzraksta veiksmīga dzēšanas operācija (kas demonstrē on delete cascade) un neveiksmīga maiņas operācijas.
-*/
-
 CREATE DATABASE Linda_3;
 GO
 
@@ -63,7 +49,7 @@ INSERT INTO Persons (PhoneNumber, Height) VALUES ('22203311', NULL);
 INSERT INTO Users (UserID, UserName, PersonID) VALUES (1, 'lr', 1);
 
 -- FK
-INSERT INTO Users (UserName, PersonID) VALUES ('l', 0);
+INSERT INTO Users (UserID, UserName, PersonID) VALUES (3, 'l', 0);
 
 
 -- ON DELETE CASCADE

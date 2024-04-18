@@ -15,7 +15,7 @@ CREATE PROCEDURE AddStudent
     @StudentName nvarchar(60),
 	@PhoneNumber int, 
 	@Gender nchar(1),
-    @Age int = 18,
+	@Age int = 18,
 	@StudentID int OUTPUT
 AS
 BEGIN
@@ -68,14 +68,12 @@ CREATE PROCEDURE UpdateStudentAge
     @StudentID int,
     @NewAge int
 AS
-BEGIN
-    BEGIN TRY
-        UPDATE Student SET Age = @NewAge WHERE StudentID = @StudentID;
-    END TRY
-	BEGIN CATCH 
-		SELECT 	ERROR_NUMBER() ErrorNumber, ERROR_MESSAGE() [Message]
-	END CATCH
-END;
+BEGIN TRY
+	UPDATE Student SET Age = @NewAge WHERE StudentID = @StudentID;
+END TRY
+BEGIN CATCH 
+	SELECT 	ERROR_NUMBER() ErrorNumber, ERROR_MESSAGE() [Message]
+END CATCH
 
 -- veiksmīgi
 EXEC UpdateStudentAge 1, 22;

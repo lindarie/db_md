@@ -4,13 +4,13 @@ USE Linda_9;
 GO
 
 CREATE TABLE Student
-(StudentID	int IDENTITY PRIMARY KEY,
+(StudentID int IDENTITY PRIMARY KEY,
 FirstName nvarchar(30),
 LastName nvarchar(30),
 IsDeleted nchar(1) default 'N');
 
 CREATE TABLE StudentLog
-(StudentID	int,
+(StudentID int,
 created_at datetime,
 modified_at datetime default NULL,
 deleted_at datetime default NULL);
@@ -21,7 +21,7 @@ CREATE TRIGGER afterStudentInsert ON Student
 AFTER INSERT
 AS
 BEGIN
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
     INSERT INTO StudentLog (StudentID, created_at)
     SELECT StudentID, GETDATE() AS InsertedDateTime
     FROM inserted;
@@ -39,12 +39,12 @@ GO
 -- after update
 CREATE TRIGGER afterStudentUpdate ON Student 
 AFTER UPDATE
-AS 
-IF (UPDATE(FirstName) OR UPDATE(LastName) )
+AS
+IF (UPDATE(FirstName) OR UPDATE(LastName))
 BEGIN
       UPDATE StudentLog
-	  SET modified_at = GETDATE() FROM inserted
-	  WHERE inserted.StudentID = StudentLog.StudentID;
+      SET modified_at = GETDATE() FROM inserted
+      WHERE inserted.StudentID = StudentLog.StudentID;
 END;
 GO
 
@@ -76,7 +76,7 @@ INSTEAD OF DELETE
 AS
 BEGIN
     UPDATE Student SET IsDeleted = 'Y'
-	WHERE StudentID IN (SELECT StudentId FROM deleted);
+    WHERE StudentID IN (SELECT StudentId FROM deleted);
 END;
 GO
 

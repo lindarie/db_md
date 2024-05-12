@@ -72,7 +72,7 @@ GO
 
 -- tests 
 DECLARE @IP IPAddress = '192.168.1.1';
-SELECT @IP.A AS PartA,@IP.C AS PartC, @IP.D AS PartD
+SELECT @IP.A AS PartA, @IP.B AS PartB, @IP.C AS PartC, @IP.D AS PartD;
 SELECT @IP.Ping() AS PingResult;
 
 -- clean up

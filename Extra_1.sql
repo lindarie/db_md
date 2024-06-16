@@ -24,6 +24,12 @@ BEGIN
 
 	TRUNCATE TABLE KreditaMaksajumi;
 
+	IF @iemaksa < 0 OR @likme < 0 OR @cena < 0 OR @veids < 0 OR @gadi < 0
+    BEGIN
+        RAISERROR('Vērtības nevar būt negatīvas', 16, 1);
+        RETURN;
+    END
+
 	-- aprēķina parādu, mēnešu skaitu un likmi
     SET @P = @cena * (1 - @iemaksa / 100);
     SET @N = @gadi * 12;
